@@ -13,7 +13,7 @@ int main (){
 
     while(!sair){
         int opcao;
-        int contAlunos;
+        int contAlunos = 0;
 
         printf("Escolha uma opção:\n");
         printf("0 - Sair\n");
@@ -34,7 +34,7 @@ int main (){
                 while(!sairAluno){
                     int opcaoAluno;
                     Aluno lista_Alunos[TAMALUNOS];
-                    
+                    int matricula;
 
                     printf("<===== Menu Alunos =====>\n");
                     printf("Escolha uma opção:\n");
@@ -56,7 +56,7 @@ int main (){
                                 printf("LISTA CHEIA!!!");
                             }else{
                                 lista_Alunos[contAlunos].ativo = 1;
-                                printf("Insira a matícula:");
+                                printf("Insira a matrícula:");
                                 scanf("%d", &lista_Alunos[contAlunos].matricula);
 
                                 printf("Insira o sexo:");
@@ -73,6 +73,47 @@ int main (){
                             }else{
                                 for(int i = 0; i < contAlunos; i++){
                                 printf("Matrícula: %d, Sexo %c\n", lista_Alunos[i].matricula, lista_Alunos[i].sexo);
+                                }
+                            }
+                            break;
+                        }
+
+                        case 3:{
+                            printf("Digite a matrícula de qual Aluno deseja atualizar:");
+                            scanf("%d", &matricula);
+                            int achou = 0;
+                            for(int i = 0; i < contAlunos; i++){
+                                if(matricula == lista_Alunos[i].matricula){
+                                    printf("Digite nova matrícula:");
+                                    scanf("%d", &lista_Alunos[i].matricula);
+                                    printf("Digite novo sexo:");
+                                    scanf(" %c", &lista_Alunos[i].sexo);
+                                    achou = 1;
+                                }
+                            }
+                            if(achou == 0){
+                                printf("Aluno inexistente!\n");
+                            }
+                            break;
+                        }
+
+                        case 4:{
+                            int achou;
+
+                            if(contAlunos == 0){
+                                printf("Não tem nenhum aluno na lista ainda!(Clique em: 1 - Cadastrar)\n");
+                            }else{
+                                printf("Qual Aluno deseja excluir?(digite a matrícula):");
+                                scanf("%d", &matricula);
+                                for(int i = 0; i < contAlunos; i++){
+                                    if(matricula == lista_Alunos[i].matricula){
+                                        lista_Alunos[i].matricula = lista_Alunos[i + 1].matricula;
+                                        contAlunos--;
+                                        achou = 1;
+                                    }
+                                }
+                                if(achou == 0){
+                                    printf("Aluno inexistente!\n");
                                 }
                             }
                             break;
