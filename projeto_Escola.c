@@ -6,6 +6,8 @@
 #define TAM_DATA 12
 #define TAM_CPF 12
 #define TAMPROFESSOR 3
+#define TAM_CODIGO 7
+#define TAMDISCIPLINA 3
 
 //retornos
 #define LISTA_CHEIA -1
@@ -18,19 +20,28 @@
 #define EXC_SUCESSO -8
 #define DATA_INVALIDA -9
 #define CPF_INVALIDO -10
+#define SEMESTRE_INVALIDO -11
 
 //funções
 int menuPrincipal();
+
 int menuAluno();
 int cadastrarAluno(lista_Alunos, contAlunos);
 void listarAlunos(lista_Alunos, contAlunos);
 int atualizarAluno(lista_Alunos, contAlunos);
 int excluirAluno(lista_Alunos, contAlunos);
+
 int menuProfessor();
 int cadastrarProfessor(lista_Professor, contProfessores);
 void listarProfessores(lista_Professor, contProfessores);
 int atualizarProfessor(lista_Professor, contProfessores);
 int excluirProfessor(lista_Professor, contProfessores);
+
+int menuDisciplina();
+int cadastrarDisciplina(lista_Disciplina, contDisciplina, contProfessores, lista_Professor);
+void listarDisciplina(lista_Disciplina, contDisciplina, lista_Professor);
+int atualizarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
+int excluirDisciplina(lista_Disciplina, contDisciplina);
 
 //estruturas
 typedef struct{
@@ -51,12 +62,25 @@ typedef struct{
     int ativo;
 }Professor;
 
+typedef struct{
+    int semestre;
+    char nome[TAM_NOME];
+    char codigo[TAM_CODIGO];
+    char nome_professor[TAM_NOME];
+    int ativo;
+}Disciplina;
+
+//INICIO
 int main (){
     int sair = 0;
+    int contAlunos = 0;
+    int contProfessores = 0;
+    int contDisciplina = 0;
+    Aluno lista_Alunos[TAMALUNOS];
+    Professor lista_Professor[TAMPROFESSOR];
+    Disciplina lista_Disciplina[TAMDISCIPLINA];
 
     while(!sair){
-        int contAlunos = 0;
-        int contProfessores = 0;
         int retorno;
         int opcao = menuPrincipal();
         
@@ -70,7 +94,6 @@ int main (){
                 int sairAluno = 0;
 
                 while(!sairAluno){
-                    Aluno lista_Alunos[TAMALUNOS];
                     int opcaoAluno = menuAluno();
 
                     switch(opcaoAluno){
@@ -179,7 +202,6 @@ int main (){
                 int sairProfessor = 0;
 
                 while(!sairProfessor){
-                    Professor lista_Professor[TAMPROFESSOR];
                     int opcaoProfessor = menuProfessor();
 
                     switch(opcaoProfessor){
@@ -246,7 +268,7 @@ int main (){
                                 }
                                 
                                 case INEXISTENTE:{
-                                    printf("ALUNO INEXISTENTE!\n");
+                                    printf("PROFESSOR INEXISTENTE!\n");
                                     break;
                                 }
                             }
@@ -285,8 +307,102 @@ int main (){
             }
 
             case 3:{
-                printf("<===== Menu Disciplinas =====>\n");
-                break;
+                int sairDisciplina = 0;
+
+                while(!sairDisciplina){
+                    int opcaoDisciplina = menuDisciplina();
+
+                    switch(opcaoDisciplina){
+                        case 0:{
+                            sairDisciplina = 1;
+                            break;
+                        }
+                        
+                        case 1:{
+                            retorno = cadastrarDisciplina(lista_Disciplina, contDisciplina, contProfessores, lista_Professor);
+
+                            switch(retorno){
+                                case LISTA_CHEIA:{
+                                    printf("LISTA CHEIA!!!\n");
+                                    break;
+                                }
+
+                                case SEMESTRE_INVALIDO:{
+                                    printf("SEMESTRE INVÁLIDO!!!\n");
+                                    break;
+                                }
+
+                                case MATRICULA_INVALIDA:{
+                                    printf("MATRÍCULA INVÁLIDA!!!\n");
+                                    break;
+                                }
+
+                                case CAD_SUCESSO:{
+                                    printf("Matrícula concluída com sucesso!\n");
+                                    contProfessores++;
+                                    break;
+                                }    
+                            }
+                            
+                            break;                            
+                        }
+
+                        case 2:{
+                            listarDisciplina(lista_Disciplina, contDisciplina, lista_Professor);
+                            break;
+                        }
+
+                        case 3:{
+                            retorno = atualizarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
+
+                            switch(retorno){
+                                case MATRICULA_INVALIDA:{
+                                    printf("MATRÍCULA INVÁLIDA!!!\n");
+                                    break;
+                                }
+
+                                case SEMESTRE_INVALIDO:{
+                                    printf("SEMESTRE INVÁLIDO!!!\n");
+                                    break;
+                                }
+
+                                case ATL_SUCESSO:{
+                                    printf("Atualização concluída com sucesso!\n");
+                                    break;
+                                }
+                                
+                                case INEXISTENTE:{
+                                    printf("DISCIPLINA INEXISTENTE!\n");
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+
+                        case 4:{
+                            retorno = excluirDisciplina(lista_Disciplina, contDisciplina);
+                            switch(retorno){
+                                case LISTA_VAZIA:{
+                                    printf("Não existe nenhum disciplina ainda(Clique em 1 - Cadastrar Disciplina)\n");
+                                    break;
+                                }
+
+                                case EXC_SUCESSO:{
+                                    printf("Exclusão concluída com sucesso!\n");
+                                    contProfessores--;
+                                    break;
+                                }
+                                
+                                case INEXISTENTE:{
+                                    printf("DISCIPLINA INEXISTENTE!\n");
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                break; 
             }
 
             default:{
@@ -555,7 +671,7 @@ int menuProfessor(){
     return opcao;
 }
 
-int cadastrarProfessor(Aluno lista_Professor[], int contProfessores){
+int cadastrarProfessor(Professor lista_Professor[], int contProfessores){
     int matricula;
     char sexo;
     char cpf[TAM_CPF];
@@ -625,7 +741,7 @@ int cadastrarProfessor(Aluno lista_Professor[], int contProfessores){
     }
 }
 
-void listarProfessores(Aluno lista_Professor[], int contProfessores){
+void listarProfessores(Professor lista_Professor[], int contProfessores){
     if(contProfessores == 0){
         printf("Não tem Professores para listar!\n");
     }else{
@@ -637,7 +753,7 @@ void listarProfessores(Aluno lista_Professor[], int contProfessores){
     }
 }
 
-int atualizarProfessor(Aluno lista_Professor[], int contProfessores){
+int atualizarProfessor(Professor lista_Professor[], int contProfessores){
     int matricula;
     char sexo;
 
@@ -691,7 +807,7 @@ int atualizarProfessor(Aluno lista_Professor[], int contProfessores){
                             j++;
                         }
                         lista_Professor[i].sexo[j] = '\0';
-                        return CAD_SUCESSO;
+                        return ATL_SUCESSO;
                     }else if(sexo == 'F' || sexo == 'f'){
                         char feminino[] = "Feminino";
                         int j = 0;
@@ -700,7 +816,7 @@ int atualizarProfessor(Aluno lista_Professor[], int contProfessores){
                             j++;
                         }
                         lista_Professor[i].sexo[j] = '\0';
-                        return CAD_SUCESSO;
+                        return ATL_SUCESSO;
                     }
                 }
             }
@@ -711,7 +827,7 @@ int atualizarProfessor(Aluno lista_Professor[], int contProfessores){
     }
 }
 
-int excluirProfessor(Aluno lista_Professor[], int contProfessores){
+int excluirProfessor(Professor lista_Professor[], int contProfessores){
     int matricula;
     char sexo;
     int achou = 0;
@@ -763,6 +879,224 @@ int excluirProfessor(Aluno lista_Professor[], int contProfessores){
         }
         if(achou == 0){
             return INEXISTENTE;
+        }
+    }
+}
+
+//DISCIPLINA
+int menuDisciplina(){
+    int opcao;
+    printf("\n");
+    printf("<===== Menu Disciplina =====>\n");
+    printf("0 - Sair\n");
+    printf("1 - Cadastrar\n");
+    printf("2 - Listar\n");
+    printf("3 - Atualizar\n");
+    printf("4 - Excluir\n");
+    printf("5 - Inserir Aluno\n");
+    printf("6 - Excluir Aluno\n");
+    printf("Escolha uma opção: ");
+
+    scanf("%d", &opcao);
+    return opcao;
+}
+
+int cadastrarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, int contProfessores, Professor lista_Professor[]){
+    int semestre;
+    int matricula;
+    
+    if(contDisciplina == TAMDISCIPLINA){
+        return LISTA_CHEIA;
+    }else{
+        lista_Disciplina[contDisciplina].ativo = 1;
+        printf("Insira o semestre da disciplina:");
+        scanf("%d", &semestre);
+        getchar();
+        if(semestre < 0){
+            return SEMESTRE_INVALIDO;
+        }else{
+            printf("Insira o nome:");
+            fgets(lista_Disciplina[contDisciplina].nome, TAM_NOME, stdin);
+            int i = 0;
+            while (lista_Disciplina[contDisciplina].nome[i] != '\n' && lista_Disciplina[contDisciplina].nome[i] != '\0') {
+                i++;
+            }
+            lista_Disciplina[contDisciplina].nome[i] = '\0';
+
+            printf("Insira o código da disciplina(ex: INF029):");
+            fgets(lista_Disciplina[contDisciplina].codigo, TAM_CODIGO, stdin);
+            int j = 0;
+            while (lista_Disciplina[contDisciplina].codigo[j] != '\n' && lista_Disciplina[contDisciplina].codigo[j] != '\0') {
+                j++;
+            }
+            lista_Disciplina[contDisciplina].codigo[j] = '\0';
+
+            printf("Insira a matrícula do professor: ");
+            scanf("%d", &matricula);
+            int achou = 0;
+            for(int i = 0; i < contProfessores; i++){
+                if(lista_Professor[i].matricula == matricula){
+                    int j = 0;
+                    while (lista_Professor[i].nome[j] != '\0' && j < TAM_NOME) {
+                        lista_Disciplina[contDisciplina].nome_professor[j] = lista_Professor[i].nome[j];
+                        j++;
+                    }
+                    lista_Disciplina[contDisciplina].nome_professor[j] = '\0';
+                    achou = 1;
+                }
+            }
+            if(achou == 0){
+                return MATRICULA_INVALIDA;
+            }else{
+                lista_Disciplina[contDisciplina].semestre = semestre;
+                return CAD_SUCESSO;
+            }
+        }    
+    }
+}
+
+void listarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[]){
+    if(contDisciplina == 0){
+        printf("Não tem Professores para listar!\n");
+    }else{
+        for(int i = 0; i < contDisciplina; i++){
+        printf("\n");
+        printf("~~~~~~~~ Disciplina %d ~~~~~~~~\n", i);
+        printf("Nome: %s\nCódigo: %s\n%dº Semestre\nProfessor: %s\n", lista_Disciplina[i].nome, lista_Disciplina[i].codigo, lista_Disciplina[i].semestre, lista_Disciplina[i].nome_professor);
+        }
+    }
+}
+
+int atualizarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores){
+    int semestre;
+    int matricula;
+    char codigo[TAM_CODIGO];
+
+    printf("Digite o código de qual Disciplina deseja atualizar:");
+    fgets(codigo, TAM_CODIGO, stdin);
+    int j = 0;
+    while (codigo[j] != '\n' && codigo[j] != '\0') {
+        j++;
+    }
+    codigo[j] = '\0';
+    int achou = 0;
+    int i = 0;
+    while(i < contDisciplina && achou == 0){
+        int igual = 0;
+        for(int j = 0; j < TAM_CODIGO; j++){
+            if(codigo[j] == lista_Disciplina[i].codigo[j]){
+                igual++;
+            }
+        }
+        if(igual == TAM_CODIGO){
+            achou = 1;
+        }
+        i++;
+    }
+    
+    if(achou == 0){
+        return INEXISTENTE;
+    }else{
+        printf("Insira o novo semestre da disciplina:");
+        scanf("%d", &semestre);
+        getchar();
+        if(semestre < 0){
+            return SEMESTRE_INVALIDO;
+        }else{
+            printf("Insira o nome:");
+            fgets(lista_Disciplina[i].nome, TAM_NOME, stdin);
+            int j = 0;
+            while (lista_Disciplina[i].nome[j] != '\n' && lista_Disciplina[contDisciplina].nome[j] != '\0') {
+                j++;
+            }
+            lista_Disciplina[i].nome[j] = '\0';
+
+            printf("Insira o código da disciplina(ex: INF029):");
+            fgets(lista_Disciplina[i].codigo, TAM_CODIGO, stdin);
+            int k = 0;
+            while (lista_Disciplina[i].codigo[k] != '\n' && lista_Disciplina[i].codigo[k] != '\0') {
+                k++;
+            }
+            lista_Disciplina[i].codigo[k] = '\0';
+
+            achou = 0;
+            for(int j = 0; j < contProfessores; j++){
+                if(lista_Professor[j].matricula == matricula){
+                    int k = 0;
+                    while (lista_Professor[j].nome[k] != '\0' && j < TAM_NOME) {
+                        lista_Disciplina[i].nome_professor[k] = lista_Professor[j].nome[k];
+                        k++;
+                    }
+                    lista_Disciplina[i].nome_professor[k] = '\0';
+                    achou = 1;
+                }
+            }
+            if(achou == 0){
+                return MATRICULA_INVALIDA;
+            }else{
+                lista_Disciplina[contDisciplina].semestre = semestre;
+                return ATL_SUCESSO;
+            }
+        }
+    }
+}
+
+int excluirDisciplina(Disciplina lista_Disciplina[], int contDisciplina){
+    int semestre;
+    int matricula;
+    char codigo[TAM_CODIGO];
+
+    if(contDisciplina == 0){
+        return LISTA_VAZIA;
+    }else{
+        printf("Digite o código de qual Disciplina deseja excluir:");
+        fgets(codigo, TAM_CODIGO, stdin);
+        int j = 0;
+        while (codigo[j] != '\n' && codigo[j] != '\0') {
+            j++;
+        }
+        codigo[j] = '\0';
+        int achou = 0;
+        int i = 0;
+        while(i < contDisciplina && achou == 0){
+            int igual = 0;
+            for(int j = 0; j < TAM_CODIGO; j++){
+                if(codigo[j] == lista_Disciplina[i].codigo[j]){
+                    igual++;
+                }
+            }
+            if(igual == TAM_CODIGO){
+                achou = 1;
+            }
+            i++;
+        }
+        
+        if(achou == 0){
+            return INEXISTENTE;
+        }else{
+            lista_Disciplina[i].semestre = lista_Disciplina[i + 1].semestre;
+
+            int j = 0;
+            while (lista_Disciplina[i + 1].nome[j] != '\0' && j < TAM_NOME) {
+                lista_Disciplina[i].nome[j] = lista_Disciplina[i + 1].nome[j];
+                j++;
+            }
+            lista_Disciplina[i].nome[j] = '\0';
+
+            int k = 0;
+            while (lista_Disciplina[i + 1].codigo[k] != '\0' && k < TAM_CODIGO) {
+                lista_Disciplina[i].codigo[k] = lista_Disciplina[i + 1].codigo[k];
+                k++;
+            }
+            lista_Disciplina[i].codigo[k] = '\0';
+
+            int l = 0;
+            while (lista_Disciplina[i + 1].nome_professor[l] != '\0' && l < TAM_NOME) {
+                lista_Disciplina[i].nome_professor[l] = lista_Disciplina[i + 1].nome_professor[l];
+                l++;
+            }
+            lista_Disciplina[i].nome_professor[l] = '\0';
+            return EXC_SUCESSO;
         }
     }
 }
