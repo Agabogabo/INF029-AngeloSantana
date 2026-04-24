@@ -24,44 +24,7 @@
 #define SEMESTRE_INVALIDO -11
 #define ALUNO_DUPLICADO -12
 
-//funções
-
-int menuPrincipal();
-
-int menuAluno();
-int cadastrarAluno(lista_Alunos, contAlunos);
-void listarAlunos(lista_Alunos, contAlunos);
-int atualizarAluno(lista_Alunos, contAlunos);
-int excluirAluno(lista_Alunos, contAlunos);
-void listarAlunosPorSexo(lista_Alunos, contAlunos);
-void listarAlunosPorNome(lista_Alunos, contAlunos);
-void listarAlunosPorData(lista_Alunos, contAlunos);
-
-int menuProfessor();
-int cadastrarProfessor(lista_Professor, contProfessores);
-void listarProfessores(lista_Professor, contProfessores);
-int atualizarProfessor(lista_Professor, contProfessores);
-int excluirProfessor(lista_Professor, contProfessores);
-void listarProfessoresPorSexo(lista_Professor, contProfessores);
-void listarProfessoresPorNome(lista_Professor, contProfessores);
-void listarProfessoresPorData(lista_Professor, contProfessores);
-
-int menuDisciplina();
-int cadastrarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
-void listarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
-int atualizarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
-int excluirDisciplina(lista_Disciplina, contDisciplina);
-int inserirAlunoDisciplina(lista_Disciplina, contDisciplina, lista_Alunos, contAlunos);
-int excluirAlunoDisciplina( lista_Disciplina, contDisciplina);
-void listarAlunosDaDisciplina( lista_Disciplina, contDisciplina, lista_Alunos, contAlunos);
-
-void listarAniversariantes(lista_Alunos, contAlunos, lista_Professor, contProfessores);
-void buscarPessoasPorString(lista_Alunos, contAlunos, lista_Professor, contProfessores);
-void listarAlunosMenosDe3Disciplinas(lista_Alunos, contAlunos, lista_Disciplina, contDisciplina);
-void listarDisciplinasMaisDe40Vagas(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
-
 //estruturas
-
 typedef struct {
     int dia;
     int mes;
@@ -95,6 +58,41 @@ typedef struct {
     int contAlunosMatriculados;
     int ativo;
 } Disciplina;
+
+//funções
+int menuPrincipal();
+
+int menuAluno();
+int cadastrarAluno(Aluno lista_Alunos[], int contAlunos);
+void listarAlunos(Aluno lista_Alunos[], int contAlunos);
+int atualizarAluno(Aluno lista_Alunos[], int contAlunos);
+int excluirAluno(Aluno lista_Alunos[], int contAlunos);
+void listarAlunosPorSexo(Aluno lista_Alunos[], int contAlunos);
+void listarAlunosPorNome(Aluno lista_Alunos[], int contAlunos);
+void listarAlunosPorData(Aluno lista_Alunos[], int contAlunos);
+
+int menuProfessor();
+int cadastrarProfessor(Professor lista_Professor[], int contProfessores);
+void listarProfessores(Professor lista_Professor[], int contProfessores);
+int atualizarProfessor(Professor lista_Professor[], int contProfessores);
+int excluirProfessor(Professor lista_Professor[], int contProfessores);
+void listarProfessoresPorSexo(Professor lista_Professor[], int contProfessores);
+void listarProfessoresPorNome(Professor lista_Professor[], int contProfessores);
+void listarProfessoresPorData(Professor lista_Professor[], int contProfessores);
+
+int menuDisciplina();
+int cadastrarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores);
+void listarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores);
+int atualizarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores);
+int excluirDisciplina(Disciplina lista_Disciplina[], int contDisciplina);
+int inserirAlunoDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Aluno lista_Alunos[], int contAlunos);
+int excluirAlunoDisciplina(Disciplina lista_Disciplina[], int contDisciplina);
+void listarAlunosDaDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Aluno lista_Alunos[], int contAlunos);
+
+void listarAniversariantes(Aluno lista_Alunos[], int contAlunos, Professor lista_Professor[], int contProfessores);
+void buscarPessoasPorString(Aluno lista_Alunos[], int contAlunos, Professor lista_Professor[], int contProfessores);
+void listarAlunosMenosDe3Disciplinas(Aluno lista_Alunos[], int contAlunos, Disciplina lista_Disciplina[], int contDisciplina);
+void listarDisciplinasMaisDe40Vagas(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores);
 
 //INICIO
 int main (){
@@ -291,10 +289,12 @@ int main (){
 
                                 case DATA_INVALIDA:{
                                     printf("\nDATA INVÁLIDA!!!\n");
+                                    break;
                                 }
 
                                 case CPF_INVALIDO:{
                                     printf("\nCPF INVÁLIDO!!!\n");
+                                    break;
                                 }
 
                                 case CAD_SUCESSO:{
@@ -424,7 +424,7 @@ int main (){
                         }
                         
                         case 1:{
-                            retorno = cadastrarDisciplina(lista_Disciplina, contDisciplina, contProfessores, lista_Professor);
+                            retorno = cadastrarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
 
                             switch(retorno){
                                 case LISTA_CHEIA:{
@@ -453,7 +453,7 @@ int main (){
                         }
 
                         case 2:{
-                            listarDisciplina(lista_Disciplina, contDisciplina, lista_Professor);
+                            listarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
                             break;
                         }
 
@@ -492,7 +492,7 @@ int main (){
                         }
 
                         case 5:{
-                            retorno = excluirAlunoDisciplina(lista_Disciplina, contDisciplina);
+                            retorno = excluirDisciplina(lista_Disciplina, contDisciplina);
                             switch(retorno){
                                 case LISTA_VAZIA:{
                                     printf("Não existe nenhuma disciplina ainda(Clique em 1 - Cadastrar Disciplina)\n");
@@ -541,7 +541,7 @@ int main (){
                         }
 
                         case 7:{
-                            retorno = excluirAlunoDisciplina(lista_Disciplina, contDisciplina, lista_Alunos, contAlunos);
+                            retorno = excluirAlunoDisciplina(lista_Disciplina, contDisciplina);
 
                             switch(retorno){
                                 case LISTA_VAZIA:{
