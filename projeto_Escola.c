@@ -1770,4 +1770,3 @@ int excluirAlunoDisciplina(Disciplina lista_Disciplina[], int contDisciplina) {
     
     return INEXISTENTE;
 }
-
