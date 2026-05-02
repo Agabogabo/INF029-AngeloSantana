@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 //tamanhos
 #define TAMALUNOS 3
@@ -332,12 +333,7 @@ int main (){
                             switch(retorno){
 
                                 case LISTA_VAZIA:{
-                                    printf("\nNão existe nenhum aluno ainda(Clique em 1 - Cadastrar Professor)\n");
-                                    break;
-                                }
-
-                                case LISTA_CHEIA:{
-                                    printf("\nLISTA CHEIA!!!\n");
+                                    printf("\nNão existe nenhum professor ainda(Clique em 1 - Cadastrar Professor)\n");
                                     break;
                                 }
 
@@ -379,12 +375,7 @@ int main (){
                             switch(retorno){
                                 
                                 case LISTA_VAZIA:{
-                                    printf("\nNão existe nenhum aluno ainda(Clique em 1 - Cadastrar Professor)\n");
-                                    break;
-                                }
-
-                                case LISTA_CHEIA:{
-                                    printf("\nLISTA CHEIA!!!\n");
+                                    printf("\nNão existe nenhum professor ainda(Clique em 1 - Cadastrar Professor)\n");
                                     break;
                                 }
 
@@ -395,7 +386,7 @@ int main (){
 
                                 case EXC_SUCESSO:{
                                     printf("\nExclusão concluída com sucesso!\n");
-                                    contAlunos--;
+                                    contProfessores--;
                                     break;
                                 }
                                 
@@ -427,23 +418,29 @@ int main (){
                             retorno = cadastrarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
 
                             switch(retorno){
+
+                                case LISTA_VAZIA:{
+                                    printf("\nNão existe nenhum professor ainda(Clique em 1 - Cadastrar Professor)\n");
+                                    break;
+                                }
+
                                 case LISTA_CHEIA:{
-                                    printf("LISTA CHEIA!!!\n");
+                                    printf("\nLISTA CHEIA!!!\n");
                                     break;
                                 }
 
                                 case SEMESTRE_INVALIDO:{
-                                    printf("SEMESTRE INVÁLIDO!!!\n");
+                                    printf("\nSEMESTRE INVÁLIDO!!!\n");
                                     break;
                                 }
 
                                 case MATRICULA_INVALIDA:{
-                                    printf("MATRÍCULA INVÁLIDA!!!\n");
+                                    printf("\nMATRÍCULA INVÁLIDA!!!\n");
                                     break;
                                 }
 
                                 case CAD_SUCESSO:{
-                                    printf("Disciplina adicionada com sucesso!\n");
+                                    printf("\nDisciplina adicionada com sucesso!\n");
                                     contDisciplina++;
                                     break;
                                 }    
@@ -468,23 +465,29 @@ int main (){
                             retorno = atualizarDisciplina(lista_Disciplina, contDisciplina, lista_Professor, contProfessores);
 
                             switch(retorno){
+
+                                case LISTA_VAZIA:{
+                                    printf("\nNão existe nenhuma disciplina ainda(Clique em 1 - Cadastrar Disciplina)\n");
+                                    break;
+                                }
+
                                 case MATRICULA_INVALIDA:{
-                                    printf("MATRÍCULA INVÁLIDA!!!\n");
+                                    printf("\nMATRÍCULA INVÁLIDA!!!\n");
                                     break;
                                 }
 
                                 case SEMESTRE_INVALIDO:{
-                                    printf("SEMESTRE INVÁLIDO!!!\n");
+                                    printf("\nSEMESTRE INVÁLIDO!!!\n");
                                     break;
                                 }
 
                                 case ATL_SUCESSO:{
-                                    printf("Atualização concluída com sucesso!\n");
+                                    printf("\nAtualização concluída com sucesso!\n");
                                     break;
                                 }
                                 
                                 case INEXISTENTE:{
-                                    printf("DISCIPLINA INEXISTENTE!\n");
+                                    printf("\nDISCIPLINA INEXISTENTE!\n");
                                     break;
                                 }
                             }
@@ -495,18 +498,18 @@ int main (){
                             retorno = excluirDisciplina(lista_Disciplina, contDisciplina);
                             switch(retorno){
                                 case LISTA_VAZIA:{
-                                    printf("Não existe nenhuma disciplina ainda(Clique em 1 - Cadastrar Disciplina)\n");
+                                    printf("\nNão existe nenhuma disciplina ainda(Clique em 1 - Cadastrar Disciplina)\n");
                                     break;
                                 }
 
                                 case EXC_SUCESSO:{
-                                    printf("Exclusão concluída com sucesso!\n");
-                                    contProfessores--;
+                                    printf("\nExclusão concluída com sucesso!\n");
+                                    contDisciplina--;
                                     break;
                                 }
                                 
                                 case INEXISTENTE:{
-                                    printf("DISCIPLINA INEXISTENTE!\n");
+                                    printf("\nDISCIPLINA INEXISTENTE!\n");
                                     break;
                                 }
                             }
@@ -518,12 +521,12 @@ int main (){
 
                             switch(retorno){
                                 case LISTA_VAZIA:{
-                                    printf("Não existe nenhuma disciplina e nenhum aluno ainda(Clique em 1 - Cadastrar Aluno no Menu Pricipal)\n");
+                                    printf("\nNão existe nenhuma disciplina ou nenhum aluno ainda(Clique em 1 - Cadastrar Aluno no Menu Pricipal ou Criar Disciplina neste menu)\n");
                                     break;
                                 }
 
                                 case LISTA_CHEIA:{
-                                    printf("LISTA CHEIA!!!\n");
+                                    printf("\nLISTA CHEIA!!!\n");
                                     break;
                                 }
 
@@ -536,8 +539,13 @@ int main (){
                                     printf("\nAluno adicionado(a) com sucesso!\n");
                                     break;
                                 }
-                            }
 
+                                case INEXISTENTE:{
+                                    printf("\nDISCIPLINA INEXISTENTE!\n");
+                                    break;
+                                }
+                            }
+                            break;
                         }
 
                         case 7:{
@@ -545,12 +553,7 @@ int main (){
 
                             switch(retorno){
                                 case LISTA_VAZIA:{
-                                    printf("Não existe nenhuma disciplina e nenhum aluno ainda(Clique em 1 - Cadastrar Aluno no Menu Pricipal)\n");
-                                    break;
-                                }
-
-                                case LISTA_CHEIA:{
-                                    printf("LISTA CHEIA!!!\n");
+                                    printf("\nNão existe nenhuma disciplina ou nenhum aluno ainda(Clique em 1 - Cadastrar Aluno no Menu Pricipal)\n");
                                     break;
                                 }
 
@@ -560,7 +563,7 @@ int main (){
                                 }
 
                                 case EXC_SUCESSO:{
-                                    printf("\nAluno adicionado(a) com sucesso!\n");
+                                    printf("\nAluno excluído(a) com sucesso!\n");
                                     break;
                                 }
                             }
@@ -616,14 +619,16 @@ int menuPrincipal(){
     printf("7 - Lista de Disciplinas que extrapolam 40 vagas\n");
     printf("Escolha uma opção: ");
     scanf("%d", &opcao);
+    getchar();
     return opcao;
 }
 
 int validarMatricula(int matricula) {
     if (matricula <= 0) {
-        return 0; // Inválido
+        return 0; 
     }
-    return 1; // Válido
+
+    return 1; 
 }
 
 int validarSexo(char sexo) {
@@ -641,14 +646,21 @@ int validarData(int dia, int mes, int ano) {
 }
 
 int validarCPF(char cpf[]) {
-    // O CPF sem pontos ou traços deve ter exatamente 11 caracteres
     if (strlen(cpf) != 11) {
         return 0;
     }
+
+    for (int i = 0; i < 11; i++) {
+        if (!isdigit(cpf[i])) {
+            return 0;
+        }
+    }
+
     return 1;
 }
 
 int validarSemestre(int semestre) {
+
     int ano = semestre / 10; 
     
     int periodo = semestre % 10; 
@@ -710,7 +722,7 @@ void listarAniversariantes(Aluno lista_Alunos[], int contAlunos, Professor lista
     if (!encontrou) {
         printf("Ninguém faz aniversário neste mês.\n");
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void buscarPessoasPorString(Aluno lista_Alunos[], int contAlunos, Professor lista_Professor[], int contProfessores) {
@@ -726,7 +738,7 @@ void buscarPessoasPorString(Aluno lista_Alunos[], int contAlunos, Professor list
     fgets(termo, sizeof(termo), stdin);
     termo[strcspn(termo, "\n")] = '\0';
 
-    if (strlen(termo) < 3) {
+    if (strlen(termo) > 3) {
         printf("Busca inválida! Você precisa digitar pelo menos 3 caracteres.\n");
         return;
     }
@@ -752,7 +764,7 @@ void buscarPessoasPorString(Aluno lista_Alunos[], int contAlunos, Professor list
     if (!encontrou) {
         printf("Nenhuma pessoa encontrada contendo \"%s\" no nome.\n", termo);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarAlunosMenosDe3Disciplinas(Aluno lista_Alunos[], int contAlunos, Disciplina lista_Disciplina[], int contDisciplina) {
@@ -782,7 +794,7 @@ void listarAlunosMenosDe3Disciplinas(Aluno lista_Alunos[], int contAlunos, Disci
         }
 
         if (contDisciplinasDoAluno < 3) {
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
             printf("Matrícula: %d | Nome: %s\n", lista_Alunos[i].matricula, lista_Alunos[i].nome);
             printf("Matriculado em: %d disciplina(s)\n", contDisciplinasDoAluno);
             encontrou = 1;
@@ -792,7 +804,7 @@ void listarAlunosMenosDe3Disciplinas(Aluno lista_Alunos[], int contAlunos, Disci
     if (!encontrou) {
         printf("Todos os alunos estão matriculados em 3 ou mais disciplinas.\n");
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarDisciplinasMaisDe40Vagas(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores) {
@@ -819,7 +831,7 @@ void listarDisciplinasMaisDe40Vagas(Disciplina lista_Disciplina[], int contDisci
                 }
             }
 
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
             printf("Disciplina: %s (%s)\n", lista_Disciplina[i].nome, lista_Disciplina[i].codigo);
             printf("Professor Responsável: %s\n", nomeProf);
             printf("Total de Vagas Ocupadas: %d\n", lista_Disciplina[i].contAlunosMatriculados);
@@ -831,7 +843,7 @@ void listarDisciplinasMaisDe40Vagas(Disciplina lista_Disciplina[], int contDisci
     if (!encontrou) {
         printf("Nenhuma disciplina extrapolou o limite de 40 vagas no momento.\n");
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 //ALUNO
@@ -892,8 +904,14 @@ int cadastrarAluno(Aluno lista_Alunos[], int contAlunos) {
     }
 
     printf("Insira o CPF do aluno (apenas os 11 numeros, sem pontos/tracos): ");
-    fgets(lista_Alunos[contAlunos].cpf, TAM_CPF, stdin); 
-    lista_Alunos[contAlunos].cpf[strcspn(lista_Alunos[contAlunos].cpf, "\n")] = '\0'; // Remove o Enter
+    fgets(lista_Alunos[contAlunos].cpf, TAM_CPF, stdin);
+
+    if (lista_Alunos[contAlunos].cpf[strlen(lista_Alunos[contAlunos].cpf) - 1] == '\n') {
+        lista_Alunos[contAlunos].cpf[strlen(lista_Alunos[contAlunos].cpf) - 1] = '\0';
+    } else {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
 
     if (!validarCPF(lista_Alunos[contAlunos].cpf)) {
         return CPF_INVALIDO;
@@ -960,7 +978,7 @@ void listarAlunosPorSexo(Aluno lista_Alunos[], int contAlunos) {
 
         if ((buscaMasculino && alunoMasculino) || (buscaFeminino && alunoFeminino)) {
             
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
             printf("Matrícula: %d | Nome: %s\n", lista_Alunos[i].matricula, lista_Alunos[i].nome);
             printf("Data de Nascimento: %02d/%02d/%04d\n", 
                    lista_Alunos[i].data_nascimento.dia, 
@@ -974,7 +992,7 @@ void listarAlunosPorSexo(Aluno lista_Alunos[], int contAlunos) {
     if (!encontrou) {
         printf("Nenhum aluno encontrado com este filtro.\n");
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarAlunosPorNome(Aluno lista_Alunos[], int contAlunos) {
@@ -1004,7 +1022,7 @@ void listarAlunosPorNome(Aluno lista_Alunos[], int contAlunos) {
     printf("\n~~~~~~ ALUNOS ORDENADOS POR NOME ~~~~~~\n");
 
     for (int i = 0; i < contAlunos; i++) {
-        printf("-----------------------------------\n");
+        printf("----------------------------------------\n");
         printf("Nome: %s\n", lista_Ordenada[i].nome);
         printf("Matrícula: %d | Sexo: %s\n", 
                lista_Ordenada[i].matricula, 
@@ -1014,7 +1032,7 @@ void listarAlunosPorNome(Aluno lista_Alunos[], int contAlunos) {
                lista_Ordenada[i].data_nascimento.mes, 
                lista_Ordenada[i].data_nascimento.ano);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarAlunosPorData(Aluno lista_Alunos[], int contAlunos) {
@@ -1051,20 +1069,18 @@ void listarAlunosPorData(Aluno lista_Alunos[], int contAlunos) {
     printf("\n~~~~~~ ALUNOS ORDENADOS POR DATA DE NASCIMENTO ~~~~~~\n");
 
     for (int i = 0; i < contAlunos; i++) {
-        printf("-----------------------------------\n");
+        printf("----------------------------------------\n");
         printf("Data de Nascimento: %02d/%02d/%04d\n", 
                lista_Ordenada[i].data_nascimento.dia, 
                lista_Ordenada[i].data_nascimento.mes, 
                lista_Ordenada[i].data_nascimento.ano);
         printf("Nome: %s | Matrícula: %d\n", lista_Ordenada[i].nome, lista_Ordenada[i].matricula);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 int atualizarAluno(Aluno lista_Alunos[], int contAlunos) {
     int matriculaBusca;
-    
-    if (contAlunos == TAMALUNOS) return LISTA_CHEIA;
     
     if (contAlunos == 0) return LISTA_VAZIA;
 
@@ -1075,7 +1091,7 @@ int atualizarAluno(Aluno lista_Alunos[], int contAlunos) {
     for (int i = 0; i < contAlunos; i++) {
         if (lista_Alunos[i].matricula == matriculaBusca) {
             
-            printf("--- Aluno Encontrado (%s) ---\n", lista_Alunos[i].nome);
+            printf("~~~~ Aluno Encontrado (%s) ~~~~\n", lista_Alunos[i].nome);
             
             int novaMatricula;
             printf("Insira a nova matrícula: ");
@@ -1102,7 +1118,13 @@ int atualizarAluno(Aluno lista_Alunos[], int contAlunos) {
             char novoCPF[TAM_CPF + 2];
             printf("Insira o novo CPF (11 dígitos): ");
             fgets(novoCPF, sizeof(novoCPF), stdin);
-            novoCPF[strcspn(novoCPF, "\n")] = '\0';
+            if (novoCPF[strlen(novoCPF) - 1] == '\n') {
+                novoCPF[strlen(novoCPF) - 1] = '\0';
+            } else {
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF);
+            }
+            
             if (!validarCPF(novoCPF)) return CPF_INVALIDO;
 
             lista_Alunos[i].matricula = novaMatricula;
@@ -1121,8 +1143,6 @@ int atualizarAluno(Aluno lista_Alunos[], int contAlunos) {
 
 int excluirAluno(Aluno lista_Alunos[], int contAlunos) {
     int matriculaBusca;
-
-    if (contAlunos == TAMALUNOS) return LISTA_CHEIA;
     
     if (contAlunos == 0) return LISTA_VAZIA;
 
@@ -1206,8 +1226,14 @@ int cadastrarProfessor(Professor lista_Professor[], int contProfessores) {
     }
 
     printf("Insira o CPF do aluno (apenas os 11 numeros, sem pontos/tracos): ");
-    fgets(lista_Professor[contProfessores].cpf, TAM_CPF, stdin); 
-    lista_Professor[contProfessores].cpf[strcspn(lista_Professor[contProfessores].cpf, "\n")] = '\0'; // Remove o Enter
+    fgets(lista_Professor[contProfessores].cpf, TAM_CPF, stdin);
+
+    if (lista_Professor[contProfessores].cpf[strlen(lista_Professor[contProfessores].cpf) - 1] == '\n') {
+        lista_Professor[contProfessores].cpf[strlen(lista_Professor[contProfessores].cpf) - 1] = '\0';
+    } else {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
 
     if (!validarCPF(lista_Professor[contProfessores].cpf)) {
         return CPF_INVALIDO;
@@ -1227,7 +1253,7 @@ void listarProfessores(Professor lista_Professor[], int contProfessores) {
     printf("\n~~~~~~~~ PROFESSORES ~~~~~~~~\n");
     
     for (int i = 0; i < contProfessores; i++) {
-        printf("-----------------------------------\n");
+        printf("----------------------------------------\n");
         printf("Matrícula: %d\n", lista_Professor[i].matricula);
         printf("Nome: %s\n", lista_Professor[i].nome);
         
@@ -1240,7 +1266,7 @@ void listarProfessores(Professor lista_Professor[], int contProfessores) {
                
         printf("CPF: %s\n", lista_Professor[i].cpf);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarProfessoresPorSexo(Professor lista_Professor[], int contProfessores) {
@@ -1264,14 +1290,14 @@ void listarProfessoresPorSexo(Professor lista_Professor[], int contProfessores) 
 
     int encontrou = 0; 
     
-    printf("\n<===== PROFESSORES FILTRADOS POR SEXO =====>\n");
+    printf("\n~~~~~~ PROFESSORES FILTRADOS POR SEXO ~~~~~~\n");
 
     for (int i = 0; i < contProfessores; i++) {
         int profMasculino = (lista_Professor[i].sexo == 'M' || lista_Professor[i].sexo == 'm');
         int profFeminino = (lista_Professor[i].sexo == 'F' || lista_Professor[i].sexo == 'f');
 
         if ((buscaMasculino && profMasculino) || (buscaFeminino && profFeminino)) {
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
             printf("Matrícula: %d | Nome: %s\n", lista_Professor[i].matricula, lista_Professor[i].nome);
             printf("Data de Nascimento: %02d/%02d/%04d\n", 
                    lista_Professor[i].data_nascimento.dia, 
@@ -1284,7 +1310,7 @@ void listarProfessoresPorSexo(Professor lista_Professor[], int contProfessores) 
     if (!encontrou) {
         printf("Nenhum professor encontrado com este filtro.\n");
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarProfessoresPorNome(Professor lista_Professor[], int contProfessores) {
@@ -1293,13 +1319,11 @@ void listarProfessoresPorNome(Professor lista_Professor[], int contProfessores) 
         return;
     }
 
-    // Cópia para não alterar o vetor original
     Professor lista_Ordenada[TAMPROFESSOR];
     for (int i = 0; i < contProfessores; i++) {
         lista_Ordenada[i] = lista_Professor[i]; 
     }
 
-    // Bubble Sort com strcmp
     for (int i = 0; i < contProfessores - 1; i++) {
         for (int j = i + 1; j < contProfessores; j++) {
             if (strcmp(lista_Ordenada[i].nome, lista_Ordenada[j].nome) > 0) {
@@ -1310,9 +1334,9 @@ void listarProfessoresPorNome(Professor lista_Professor[], int contProfessores) 
         }
     }
 
-    printf("\n<===== PROFESSORES ORDENADOS POR NOME =====>\n");
+    printf("\n~~~~~~ PROFESSORES ORDENADOS POR NOME ~~~~~~\n");
     for (int i = 0; i < contProfessores; i++) {
-        printf("-----------------------------------\n");
+        printf("----------------------------------------\n");
         printf("Nome: %s\n", lista_Ordenada[i].nome);
         printf("Matrícula: %d | Sexo: %s\n", 
                lista_Ordenada[i].matricula, 
@@ -1322,7 +1346,7 @@ void listarProfessoresPorNome(Professor lista_Professor[], int contProfessores) 
                lista_Ordenada[i].data_nascimento.mes, 
                lista_Ordenada[i].data_nascimento.ano);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 void listarProfessoresPorData(Professor lista_Professor[], int contProfessores) {
@@ -1336,7 +1360,6 @@ void listarProfessoresPorData(Professor lista_Professor[], int contProfessores) 
         lista_Ordenada[i] = lista_Professor[i];
     }
 
-    // Bubble Sort com compressão matemática da data (AAAAMMDD)
     for (int i = 0; i < contProfessores - 1; i++) {
         for (int j = i + 1; j < contProfessores; j++) {
             long data_i = (lista_Ordenada[i].data_nascimento.ano * 10000) + 
@@ -1355,33 +1378,31 @@ void listarProfessoresPorData(Professor lista_Professor[], int contProfessores) 
         }
     }
 
-    printf("\n<===== PROFESSORES ORDENADOS POR DATA =====>\n");
+    printf("\n~~~~~~ PROFESSORES ORDENADOS POR DATA ~~~~~~\n");
     for (int i = 0; i < contProfessores; i++) {
-        printf("-----------------------------------\n");
+        printf("----------------------------------------\n");
         printf("Data de Nascimento: %02d/%02d/%04d\n", 
                lista_Ordenada[i].data_nascimento.dia, 
                lista_Ordenada[i].data_nascimento.mes, 
                lista_Ordenada[i].data_nascimento.ano);
         printf("Nome: %s | Matrícula: %d\n", lista_Ordenada[i].nome, lista_Ordenada[i].matricula);
     }
-    printf("-----------------------------------\n");
+    printf("----------------------------------------\n");
 }
 
 int atualizarProfessor(Professor lista_Professor[], int contProfessores) {
     int matriculaBusca;
     
-    if (contProfessores == TAMPROFESSOR) return LISTA_CHEIA;
-    
     if (contProfessores == 0) return LISTA_VAZIA;
 
-    printf("\nDigite a matrícula do aluno que deseja atualizar: ");
+    printf("\nDigite a matrícula do professor que deseja atualizar: ");
     scanf("%d", &matriculaBusca);
     getchar(); 
 
     for (int i = 0; i < contProfessores; i++) {
         if (lista_Professor[i].matricula == matriculaBusca) {
             
-            printf("--- Aluno Encontrado (%s) ---\n", lista_Professor[i].nome);
+            printf("~~~~ Professor Encontrado (%s) ~~~~\n", lista_Professor[i].nome);
             
             int novaMatricula;
             printf("Insira a nova matrícula: ");
@@ -1408,7 +1429,13 @@ int atualizarProfessor(Professor lista_Professor[], int contProfessores) {
             char novoCPF[TAM_CPF + 2];
             printf("Insira o novo CPF (11 dígitos): ");
             fgets(novoCPF, sizeof(novoCPF), stdin);
-            novoCPF[strcspn(novoCPF, "\n")] = '\0';
+            if (novoCPF[strlen(novoCPF) - 1] == '\n') {
+                novoCPF[strlen(novoCPF) - 1] = '\0';
+            } else {
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF);
+            }
+            
             if (!validarCPF(novoCPF)) return CPF_INVALIDO;
 
             lista_Professor[i].matricula = novaMatricula;
@@ -1427,8 +1454,6 @@ int atualizarProfessor(Professor lista_Professor[], int contProfessores) {
 
 int excluirProfessor(Professor lista_Professor[], int contProfessores) {
     int matriculaBusca;
-
-    if (contProfessores == TAMPROFESSOR) return LISTA_CHEIA;
     
     if (contProfessores == 0) return LISTA_VAZIA;
 
@@ -1475,6 +1500,8 @@ int menuDisciplina(){
 }
 
 int cadastrarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Professor lista_Professor[], int contProfessores) {
+
+    if (contProfessores == 0) return LISTA_VAZIA;
     
     if (contDisciplina == TAMDISCIPLINA) return LISTA_CHEIA;
 
@@ -1570,10 +1597,10 @@ void listarAlunosDaDisciplina(Disciplina lista_Disciplina[], int contDisciplina,
         if (strcmp(lista_Disciplina[i].codigo, codigoBusca) == 0) {
             achouDisciplina = 1;
             
-            printf("\n<===== DETALHES DA DISCIPLINA =====>\n");
+            printf("\n~~~~~~ DETALHES DA DISCIPLINA ~~~~~~\n");
             printf("Disciplina: %s (%s)\n", lista_Disciplina[i].nome, lista_Disciplina[i].codigo);
             printf("Total de Alunos Matriculados: %d\n", lista_Disciplina[i].contAlunosMatriculados);
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
 
             if (lista_Disciplina[i].contAlunosMatriculados == 0) {
                 printf("Nenhum aluno matriculado nesta turma ainda.\n");
@@ -1590,7 +1617,7 @@ void listarAlunosDaDisciplina(Disciplina lista_Disciplina[], int contDisciplina,
                     }
                 }
             }
-            printf("-----------------------------------\n");
+            printf("----------------------------------------\n");
             break; 
         }
     }
@@ -1614,7 +1641,7 @@ int atualizarDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Profe
         
         if (strcmp(lista_Disciplina[i].codigo, codigoBusca) == 0) {
             
-            printf("--- Disciplina Encontrada: %s ---\n", lista_Disciplina[i].nome);
+            printf("~~~~ Disciplina Encontrada: %s ~~~~\n", lista_Disciplina[i].nome);
 
             char novoCodigo[TAM_CODIGO];
             char novoNome[TAM_NOME];
@@ -1694,6 +1721,7 @@ int inserirAlunoDisciplina(Disciplina lista_Disciplina[], int contDisciplina, Al
     printf("\nDigite o código da Disciplina: ");
     fgets(codigoBusca, sizeof(codigoBusca), stdin);
     codigoBusca[strcspn(codigoBusca, "\n")] = '\0';
+
 
     for (int i = 0; i < contDisciplina; i++) {
         if (strcmp(lista_Disciplina[i].codigo, codigoBusca) == 0) {
