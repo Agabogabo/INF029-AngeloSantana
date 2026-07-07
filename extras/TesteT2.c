@@ -36,10 +36,9 @@ void inicializar();
 void finalizar();
 void show_log(char *str);
 
-// Variável global[cite: 6]
+
 Bloco *vetorPrincipal[10];
 
-// Implementação das funções (provenientes de trabalho2.c)[cite: 6]
 int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
     // se posição é um valor válido {entre 1 e 10}
