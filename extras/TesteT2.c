@@ -159,9 +159,14 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor)
         for(int i = 0; i < vetorPrincipal[posicao - 1]->qtd; i++){
             if(vetorPrincipal[posicao - 1]->inicio[i] == valor){
                 num_valido = 1;
-                for(int j = i; j < vetorPrincipal[posicao - 1]->qtd; j++){
+                
+                for(int j = i; j < vetorPrincipal[posicao - 1]->qtd - 1; j++){
                     vetorPrincipal[posicao - 1]->inicio[j] = vetorPrincipal[posicao - 1]->inicio[j + 1];
                 }
+                
+                vetorPrincipal[posicao - 1]->qtd--;
+                
+                break; 
             }
         }
         if(num_valido != 1) return NUMERO_INEXISTENTE;
@@ -247,10 +252,10 @@ int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
     int qtdGeral = 0;
 
-    for(int i = 0; i > 10; i++){
+    for(int i = 0; i < 10; i++){
         if(vetorPrincipal[i] != NULL){
             for(int j = 0; j < vetorPrincipal[i]->qtd; j++){
-                vetorAux[i] = vetorPrincipal[i]->inicio[j];
+                vetorAux[qtdGeral] = vetorPrincipal[i]->inicio[j];
                 qtdGeral++;
             }
         }
@@ -273,10 +278,10 @@ int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
     int qtdGeral = 0;
 
-    for(int i = 0; i > 10; i++){
+    for(int i = 0; i < 10; i++){
         if(vetorPrincipal[i] != NULL){
             for(int j = 0; j < vetorPrincipal[i]->qtd; j++){
-                vetorAux[i] = vetorPrincipal[i]->inicio[j];
+                vetorAux[qtdGeral] = vetorPrincipal[i]->inicio[j];
                 qtdGeral++;
             }
         }
@@ -313,9 +318,27 @@ Rertono (int)
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
+    if(posicao < 1 || posicao > 10) return POSICAO_INVALIDA;
 
-    int retorno = 0;
-    return retorno;
+    if(vetorPrincipal[posicao - 1] == NULL) return SEM_ESTRUTURA_AUXILIAR;
+
+    int tamanhoAtual = vetorPrincipal[posicao - 1]->capacidade;
+    int tamanhoFinal = tamanhoAtual + novoTamanho;
+
+    if(tamanhoFinal < 1) return NOVO_TAMANHO_INVALIDO;
+
+    int *temp = realloc(vetorPrincipal[posicao - 1]->inicio, tamanhoFinal * sizeof(int));
+
+    if(temp == NULL) return SEM_ESPACO_DE_MEMORIA;
+
+    vetorPrincipal[posicao - 1]->inicio = temp;
+    vetorPrincipal[posicao - 1]->capacidade = tamanhoFinal;
+
+    if(vetorPrincipal[posicao - 1]->qtd > tamanhoFinal){
+        vetorPrincipal[posicao - 1]->qtd = tamanhoFinal;
+    }
+
+    return SUCESSO;
 }
 
 /*
@@ -329,10 +352,16 @@ Retorno (int)
 */
 int getQuantidadeElementosEstruturaAuxiliar(int posicao)
 {
+    int qtd = 0;
+    int retorno = estahVazio(posicao);
 
-    int retorno = 0;
+    if(retorno == SUCESSO){
+        for(int i = 0; i < vetorPrincipal[posicao - 1]->qtd; i++){
+            qtd++;
+        }
+    }
 
-    return retorno;
+    return qtd;
 }
 
 /*
