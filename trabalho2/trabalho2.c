@@ -12,6 +12,16 @@ typedef struct{
 
 Bloco *vetorPrincipal[TAM];
 
+int estahVazio(int posicao) {
+    if (posicao < 1 || posicao > 10) return POSICAO_INVALIDA;
+    
+    if (vetorPrincipal[posicao - 1] == NULL) return SEM_ESTRUTURA_AUXILIAR;
+    
+    if (vetorPrincipal[posicao - 1]->qtd == 0) return ESTRUTURA_AUXILIAR_VAZIA;
+    
+    return SUCESSO;
+}
+
 /*
 Objetivo: criar estrutura auxiliar na posição 'posicao'.
 com tamanho 'tamanho'
@@ -447,14 +457,4 @@ void finalizar() {
             vetorPrincipal[i] = NULL;
         }
     }
-}
-
-int estahVazio(int posicao) {
-    if (posicao < 1 || posicao > 10) return POSICAO_INVALIDA;
-    
-    if (vetorPrincipal[posicao - 1] == NULL) return SEM_ESTRUTURA_AUXILIAR;
-    
-    if (vetorPrincipal[posicao - 1]->qtd == 0) return ESTRUTURA_AUXILIAR_VAZIA;
-    
-    return SUCESSO;
 }
